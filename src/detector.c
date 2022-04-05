@@ -302,15 +302,15 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         //next_map_calc = fmax(next_map_calc, 400);
         if (calc_map) {
             printf("\n (next mAP calculation at %d iterations) ", next_map_calc);
-            if (mean_average_precision > 0) printf("\n{'last_map': %2.2f}", mean_average_precision * 100);
+            if (mean_average_precision > 0) printf("\n Last map: %2.2f", mean_average_precision * 100);
         }
 
         #ifndef WIN32
         if (mean_average_precision > 0.0) {
-            printf("\n{'current_epoch': %d, 'max_epoch': %d, 'loss': %0.1f, 'map': %0.2f, 'best': %0.2f, 'hours_left': %0.1f, 'avg_loss': %f}", iteration, net.max_batches, loss, mean_average_precision, best_map, avg_time, avg_loss);
+            printf("\n{\"current_epoch\": %d, \"max_epoch\": %d, \"loss\": %0.1f, \"map\": %0.2f, \"best\": %0.2f, \"hours_left\": %0.1f, \"avg_loss\": %f}", iteration, net.max_batches, loss, mean_average_precision, best_map, avg_time, avg_loss);
         }
         else {
-            printf("\n{'current_epoch': %d, 'max_epoch': %d, 'loss': %0.1f, 'hours_left': %0.1f, 'avg_loss': %f}", iteration, net.max_batches, loss, avg_time, avg_loss);
+            printf("\n{\"current_epoch\": %d, \"max_epoch\": %d, \"loss\": %0.1f, \"hours_left\": %0.1f, \"avg_loss\": %f}", iteration, net.max_batches, loss, avg_time, avg_loss);
         }
         #endif
 
