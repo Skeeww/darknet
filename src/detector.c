@@ -231,10 +231,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
                 net.batch = dim_b;
                 imgs = net.batch * net.subdivisions * ngpus;
                 args.n = imgs;
-                printf("\n %d x %d  (batch = %d) \n", dim_w, dim_h, net.batch);
             }
-            else
-                printf("\n %d x %d \n", dim_w, dim_h);
 
             pthread_join(load_thread, 0);
             train = buffer;
@@ -305,15 +302,15 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         //next_map_calc = fmax(next_map_calc, 400);
         if (calc_map) {
             printf("\n (next mAP calculation at %d iterations) ", next_map_calc);
-            if (mean_average_precision > 0) printf("\n Last accuracy mAP@%0.2f = %2.2f %%, best = %2.2f %% ", iou_thresh, mean_average_precision * 100, best_map * 100);
+            if (mean_average_precision > 0) printf("\n{'last_map': %2.2f}", mean_average_precision * 100);
         }
 
         #ifndef WIN32
         if (mean_average_precision > 0.0) {
-            printf("\033]2;%d/%d: loss=%0.1f map=%0.2f best=%0.2f hours left=%0.1f\007", iteration, net.max_batches, loss, mean_average_precision, best_map, avg_time);
+            printf("\n{'current_epoch': %d, 'max_epoch': %d, 'loss': %0.1f, 'map': %0.2f, 'best': %0.2f, 'hours_left': %0.1f, 'avg_loss': %f}", iteration, net.max_batches, loss, mean_average_precision, best_map, avg_time, avg_loss);
         }
         else {
-            printf("\033]2;%d/%d: loss=%0.1f hours left=%0.1f\007", iteration, net.max_batches, loss, avg_time);
+            printf("\n{'current_epoch': %d, 'max_epoch': %d, 'loss': %0.1f, 'hours_left': %0.1f, 'avg_loss': %f}", iteration, net.max_batches, loss, avg_time, avg_loss);
         }
         #endif
 
