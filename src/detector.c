@@ -306,12 +306,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
         }
 
         #ifndef WIN32
-        if (mean_average_precision > 0.0) {
             printf("\n{\"current_epoch\": %d, \"max_epoch\": %d, \"loss\": %0.1f, \"map\": %0.2f, \"best\": %0.2f, \"hours_left\": %0.1f, \"avg_loss\": %f}", iteration, net.max_batches, loss, mean_average_precision, best_map, avg_time, avg_loss);
-        }
-        else {
-            printf("\n{\"current_epoch\": %d, \"max_epoch\": %d, \"loss\": %0.1f, \"hours_left\": %0.1f, \"avg_loss\": %f}", iteration, net.max_batches, loss, avg_time, avg_loss);
-        }
         #endif
 
         if (net.cudnn_half) {
